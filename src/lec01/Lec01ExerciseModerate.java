@@ -68,9 +68,9 @@ public class Lec01ExerciseModerate {
 
         for (String shape : shapes_encountered) {
             int shape_count = countByShape(shapes, shape);
-            int duration_sum = sumByShape(durations, shapes, shape);
-            double latitude_sum = sumByShape(latitudes, shapes, shape);
-            double longitude_sum = sumByShape(longitudes, shapes, shape);
+            int duration_sum = sumIntsByShape(durations, shapes, shape);
+            double latitude_sum = sumDoublesByShape(latitudes, shapes, shape);
+            double longitude_sum = sumDoublesByShape(longitudes, shapes, shape);
 
             System.out.println("Averages for " + shape + ":");
             System.out.println("  Duration: " + String.format("%.2f", ((double) duration_sum) / ((double) shape_count)));
@@ -78,6 +78,14 @@ public class Lec01ExerciseModerate {
             System.out.println();
         }
     }
+
+    // Helper functions:
+
+    // readDateAndTime
+    // Provided a scanner object with next input representing
+    // a date and time in "mm/dd/yy hh:mm" format.
+    // Parses component values for month, day, year, hour, and minute from string
+    // and sets the corresponding value in arrays passed in at index value provided.
 
     private static void readDateAndTime(Scanner scan, int index,
                                         int[] months, int[] days, int[] years,
@@ -94,17 +102,27 @@ public class Lec01ExerciseModerate {
         minutes[index] = Integer.parseInt(time_components[1]);
     }
 
-    private static int sumByShape(int[] values, String[] shapes, String shape) {
+    // sumIntsByShape
+    // Passed an integer array with a corresponding array of shape strings.
+    // Also passed a specific shape string to filter by.
+    // Sums the entries of the integer array that have a corresponding shape that
+    // matches the filter shape string and returns that sum.
+    private static int sumIntsByShape(int[] values, String[] shapes, String shape_filter) {
         int sum = 0;
         for (int i=0; i<values.length; i++) {
-            if (shapes[i].equals(shape)) {
+            if (shapes[i].equals(shape_filter)) {
                 sum += values[i];
             }
         }
         return sum;
     }
 
-    private static double sumByShape(double[] values, String[] shapes, String shape) {
+    // sumDoublesByShape
+    // Passed a double array with a corresponding array of shape strings.
+    // Also passed a specific shape string to filter by.
+    // Sums the entries of the double array that have a corresponding shape that
+    // matches the filter shape string and returns that sum.
+    private static double sumDoublesByShape(double[] values, String[] shapes, String shape) {
         double sum = 0.0;
         for (int i=0; i<values.length; i++) {
             if (shapes[i].equals(shape)) {
@@ -114,6 +132,9 @@ public class Lec01ExerciseModerate {
         return sum;
     }
 
+    // countByShape
+    // Given an array of shape strings and a specific shape string to count,
+    // returns the number of times the shape appears in the array.
     private static int countByShape(String[] shapes, String shape) {
         int count = 0;
         for (String s : shapes) {
@@ -124,6 +145,10 @@ public class Lec01ExerciseModerate {
         return count;
     }
 
+    // findMaxIndex
+    // Given an array of integers, returns the index associated
+    // with the largest value in the array. In case of ties,
+    // the greater index value is returned.
     private static int findMaxIndex(int[] values) {
         int max = values[0];
         int max_index = 0;
@@ -136,6 +161,10 @@ public class Lec01ExerciseModerate {
         return max_index;
     }
 
+    // findMinIndex
+    // Given an array of integers, returns the index associated
+    // with the smallest value in the array. In case of ties,
+    // the greater index value is returned.
     private static int findMinIndex(int[] values) {
         int min = values[0];
         int min_index = 0;
@@ -147,6 +176,4 @@ public class Lec01ExerciseModerate {
         }
         return min_index;
     }
-
-
 }

@@ -13,7 +13,7 @@ public class Lec01ExerciseComplex {
 
         int count = scan.nextInt();
 
-        // Read entries into storage.
+        // Read entries into an array of entries.
         // Keep track of longest and shortest along the way.
         // Build list of shapes as each shape first encountered.
 
@@ -38,17 +38,17 @@ public class Lec01ExerciseComplex {
 
         }
 
-
+        // Report information about longest and shortest.
         assert longest != null;
         System.out.println("Longest sighting:");
-        System.out.println("  When: " + makeTimestampString(longest.timestamp));
+        System.out.println("  When: " + makeDateTimeString(longest.timestamp));
         System.out.println("  Shape: " + longest.shape);
         System.out.println("  Where: " + makeLatLongString(longest.location));
         System.out.println();
 
         assert shortest != null;
         System.out.println("Shortest sighting:");
-        System.out.println("  When: " + makeTimestampString(shortest.timestamp));
+        System.out.println("  When: " + makeDateTimeString(shortest.timestamp));
         System.out.println("  Shape: " + shortest.shape);
         System.out.println("  Where: " + makeLatLongString(shortest.location));
         System.out.println();
@@ -56,8 +56,8 @@ public class Lec01ExerciseComplex {
         // Report averages by shape.
 
         for (String shape : shapes_encountered) {
-            double duration_avg = averageInteger(extractDurations(filterByShape(entries, shape)));
-            LatLong lat_long_avg = averageLatLong(extractLocations(filterByShape(entries, shape)));
+            double duration_avg = averageIntegerList(extractDurations(filterByShape(entries, shape)));
+            Location lat_long_avg = averageLocation(extractLocations(filterByShape(entries, shape)));
             System.out.println("Averages for " + shape + ":");
             System.out.println("  Duration: " + String.format("%.2f", duration_avg));
             System.out.println("  Location: " + makeLatLongString(lat_long_avg));
@@ -65,24 +65,35 @@ public class Lec01ExerciseComplex {
         }
     }
 
+    // Helper functions:
+
+    // readEntryFromScanner
+    // Provided scanner object with beginning of UFO entry as next input.
+    // Reads entry data, creates and returns new entry object with data.
     static UFOEntry readEntryFromScanner(Scanner scan) {
         UFOEntry e = new UFOEntry();
 
-        e.timestamp = readTimeStampFromScanner(scan);
+        e.timestamp = readDateTimeFromScanner(scan);
         e.shape = scan.next();
         e.duration = scan.nextInt();
-        e.location = readLatLongFromScanner(scan);
+        e.location = readLocationFromScanner(scan);
 
         return e;
     }
 
-    static TimeStamp readTimeStampFromScanner(Scanner scan) {
-        TimeStamp ts = new TimeStamp();
+    // readDateTimeFromScanner
+    // Provided scanner object with date and time as next input.
+    // Reads date and time data, creates and returns new DateTime object with data.
+    static DateTime readDateTimeFromScanner(Scanner scan) {
+        DateTime ts = new DateTime();
         ts.date = readDateFromScanner(scan);
         ts.time = readTimeFromScanner(scan);
         return ts;
     }
 
+    // readTimeFromScanner
+    // Provided scanner object with time as next input.
+    // Reads time data, creates and return new time object with data.
     static Time readTimeFromScanner(Scanner scan) {
         Time t = new Time();
         String time_str = scan.next();
@@ -93,6 +104,9 @@ public class Lec01ExerciseComplex {
         return t;
     }
 
+    // readDateFromScanner
+    // Provided scanner object with date as next input.
+    // Reads date data, creates and returns new date object with data.
     static Date readDateFromScanner(Scanner scan) {
         Date d = new Date();
         String date_str = scan.next();
@@ -104,38 +118,54 @@ public class Lec01ExerciseComplex {
         return d;
     }
 
-    static LatLong readLatLongFromScanner(Scanner scan) {
-        LatLong loc = new LatLong();
+    // readLocationFromScanner
+    // Provided scanner object with latitude and longitude as next input.
+    // Reads lat and long data, creates and returns new Location object with data.
+    static Location readLocationFromScanner(Scanner scan) {
+        Location loc = new Location();
         loc.latitude = scan.nextDouble();
         loc.longitude = scan.nextDouble();
         return loc;
     }
 
-    static String makeLatLongString(LatLong loc) {
+    // makeLatLongString
+    // Given a Location object, creates and returns a formatted String
+    // like so: "(lat, long)" with location latitude and longitude
+    // expressed as real number rounded to the second decimal point.
+    static String makeLatLongString(Location loc) {
         return String.format("(%.2f, %.2f)", loc.latitude, loc.longitude);
     }
 
-    static String makeTimestampString(TimeStamp ts) {
-        return String.format("%d/%d/%d %d:%02d", ts.date.month, ts.date.day, ts.date.year, ts.time.hours, ts.time.minutes);
+    // makeDateTimeString
+    // Given a DateTime object, creates and returns a formatted String
+    // like so: "mm/dd/yy hh::mm" with month, day, year, hour, and minute
+    // information expressed as integers in appropriate places.
+    static String makeDateTimeString(DateTime dt) {
+        return String.format("%d/%d/%d %d:%02d", dt.date.month, dt.date.day, dt.date.year, dt.time.hours, dt.time.minutes);
     }
 
-    private static LatLong averageLatLong(List<LatLong> values) {
+    // averageLocation
+    // Given a list of Location objects, returns a new Location object representing the
+    // average latitude and longitude in the list.
+    private static Location averageLocation(List<Location> locations) {
         double lat_sum = 0.0;
         double long_sum = 0.0;
 
-        for (LatLong loc : values) {
+        for (Location loc : locations) {
             lat_sum += loc.latitude;
             long_sum += loc.longitude;
         }
 
-        LatLong avg_lat_long = new LatLong();
-        avg_lat_long.latitude = lat_sum / values.size();
-        avg_lat_long.longitude = long_sum / values.size();
+        Location avg_location = new Location();
+        avg_location.latitude = lat_sum / locations.size();
+        avg_location.longitude = long_sum / locations.size();
 
-        return avg_lat_long;
+        return avg_location;
     }
 
-    private static double averageInteger(List<Integer> values) {
+    // averageIntegerList
+    // Given a list of integers, returns its average as a double.
+    private static double averageIntegerList(List<Integer> values) {
         int sum = 0;
         for (int i : values) {
             sum += i;
@@ -143,14 +173,20 @@ public class Lec01ExerciseComplex {
         return ((double) sum) / ((double) values.size());
     }
 
-    private static List<LatLong> extractLocations(List<UFOEntry> entries) {
-        List<LatLong> locations = new ArrayList<LatLong>();
+    // extractLocations
+    // Given a list of UFOEntry objects, returns a new list of
+    // Location objects extracted from the UFO entries.
+    private static List<Location> extractLocations(List<UFOEntry> entries) {
+        List<Location> locations = new ArrayList<Location>();
         for (UFOEntry e : entries) {
             locations.add(e.location);
         }
         return locations;
     }
 
+    // extractDurations
+    // Given a list of UFOEntry objects, returns a new list of
+    // integers representing the durations extracted from the UFO entries.
     private static List<Integer> extractDurations(List<UFOEntry> entries) {
         List<Integer> durations = new ArrayList<Integer>();
         for (UFOEntry e : entries) {
@@ -159,6 +195,9 @@ public class Lec01ExerciseComplex {
         return durations;
     }
 
+    // filterByShape
+    // Given an array of UFOEntry objects and a shape filter string value,
+    // returns a list of UFOEntry objects from the array with a shape that matches the shape filter.
     private static List<UFOEntry> filterByShape(UFOEntry[] entries, String shape) {
         List<UFOEntry> filtered = new ArrayList<UFOEntry>();
 
@@ -171,31 +210,36 @@ public class Lec01ExerciseComplex {
     }
 }
 
-// Object definitions used above.
+// Object defined for use above.
 
+// UFOEntry
 class UFOEntry {
-    TimeStamp timestamp;
+    DateTime timestamp;
     String shape;
     int duration;
-    LatLong location;
+    Location location;
 }
 
-class LatLong {
+// LatLong
+class Location {
     double latitude;
     double longitude;
 }
 
-class TimeStamp {
+// TimeStamp
+class DateTime {
     Date date;
     Time time;
 }
 
+// Date
 class Date {
     int month;
     int day;
     int year;
 }
 
+// Time
 class Time {
     int hours;
     int minutes;
