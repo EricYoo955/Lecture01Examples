@@ -160,8 +160,14 @@ public class Lec01ExerciseSimplest {
             if (shape_counts[i] != 0) {
                 String shape = shape_list[i];
 
+                // Calculate average duration, latitude, and longitude by
+                // dividing sum for shape by shape count.
+                double avg_duration = ((double) duration_sums[i]) / ((double) shape_counts[i]);
+                double avg_latitude = latitude_sums[i] / ((double) shape_counts[i]);
+                double avg_longitude = longitude_sums[i]/ ((double) shape_counts[i]);
+
                 System.out.println("Averages for " + shape + ":");
-                System.out.println("  Duration: " + String.format("%.2f", ((double) duration_sums[i]) / ((double) shape_counts[i])));
+                System.out.println("  Duration: " + String.format("%.2f", avg_duration));
                 System.out.println("  Location: " + String.format("(%.2f, %.2f)", latitude_sums[i] / ((double) shape_counts[i]), longitude_sums[i] / ((double) shape_counts[i])));
                 System.out.println();
             }
