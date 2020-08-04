@@ -81,11 +81,17 @@ public class Lec01ExerciseModerate {
 
     // Helper functions:
 
-    // readDateAndTime
-    // Provided a scanner object with next input representing
-    // a date and time in "mm/dd/yy hh:mm" format.
-    // Parses component values for month, day, year, hour, and minute from string
-    // and sets the corresponding value in arrays passed in at index value provided.
+    // readDateAndTime(scanner, index
+    //                 month_array, day_array, year_array,
+    // 		           hour_array, minute_array)
+    //
+    // Provided a scanner object with next expected input
+    // to be in "mm/dd/yy hh:mm" format.
+    // Also provided index value and component arrays.
+    //
+    // Parses component values for month, day, year, hour,
+    // and minute from input and sets the corresponding values
+    // in appropriate arrays at index provided.
 
     private static void readDateAndTime(Scanner scan, int index,
                                         int[] months, int[] days, int[] years,
@@ -102,11 +108,16 @@ public class Lec01ExerciseModerate {
         minutes[index] = Integer.parseInt(time_components[1]);
     }
 
-    // sumIntsByShape
-    // Passed an integer array with a corresponding array of shape strings.
+    // sumIntsByShape(values, shapes, shape_filter)
+    //
+    // Passed an integer array of values with a
+    // corresponding array of shape strings.
     // Also passed a specific shape string to filter by.
-    // Sums the entries of the integer array that have a corresponding shape that
-    // matches the filter shape string and returns that sum.
+    //
+    // Sums the entries of the integer array that have a
+    // corresponding shape that matches the filter shape string.
+    // Returns overall sum.
+
     private static int sumIntsByShape(int[] values, String[] shapes, String shape_filter) {
         int sum = 0;
         for (int i=0; i<values.length; i++) {
@@ -117,38 +128,48 @@ public class Lec01ExerciseModerate {
         return sum;
     }
 
-    // sumDoublesByShape
+    // sumDoublesByShape(values, shapes, shape_filter)
+    //
     // Passed a double array with a corresponding array of shape strings.
     // Also passed a specific shape string to filter by.
-    // Sums the entries of the double array that have a corresponding shape that
-    // matches the filter shape string and returns that sum.
-    private static double sumDoublesByShape(double[] values, String[] shapes, String shape) {
+    //
+    // Sums the entries of the double array that have a
+    // corresponding shape that matches the filter shape string.
+    // Returns overall sum.
+    private static double sumDoublesByShape(double[] values, String[] shapes, String shape_filter) {
         double sum = 0.0;
         for (int i=0; i<values.length; i++) {
-            if (shapes[i].equals(shape)) {
+            if (shapes[i].equals(shape_filter)) {
                 sum += values[i];
             }
         }
         return sum;
     }
 
-    // countByShape
-    // Given an array of shape strings and a specific shape string to count,
-    // returns the number of times the shape appears in the array.
-    private static int countByShape(String[] shapes, String shape) {
+    // countByShape(shapes, shape_filter)
+    //
+    // Passed an array of shape strings and a specific
+    // shape string to filter by.
+    //
+    // Returns the number of times the shape
+    // appears in the array.
+    private static int countByShape(String[] shapes, String shape_filter) {
         int count = 0;
         for (String s : shapes) {
-            if (s.equals(shape)) {
+            if (s.equals(shape_filter)) {
                 count++;
             }
         }
         return count;
     }
 
-    // findMaxIndex
-    // Given an array of integers, returns the index associated
-    // with the largest value in the array. In case of ties,
-    // the greater index value is returned.
+    // findMaxIndex(values)
+    //
+    // Passed an array of integers.
+    //
+    // Returns the index associated with the largest value in the array.
+    // If largest value appears more than once, index value of last
+    // occurrence (i.e, greatest index value) is returned.
     private static int findMaxIndex(int[] values) {
         int max = values[0];
         int max_index = 0;
@@ -161,10 +182,13 @@ public class Lec01ExerciseModerate {
         return max_index;
     }
 
-    // findMinIndex
-    // Given an array of integers, returns the index associated
-    // with the smallest value in the array. In case of ties,
-    // the greater index value is returned.
+    // findMinIndex(values)
+    //
+    // Passed an array of integers.
+    //
+    // Returns the index associated with the smallest value in the array.
+    // If smallest value appears more than once, index value of last
+    // occurrence (i.e., greatest index value) is returned.
     private static int findMinIndex(int[] values) {
         int min = values[0];
         int min_index = 0;
