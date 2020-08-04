@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Lec01ExerciseComplex {
 
+    // Main program
     public static void main(String[] args) {
 
         // Establish a way to receive input as space separated words.
@@ -67,7 +68,7 @@ public class Lec01ExerciseComplex {
 
     // Helper functions:
 
-    // readEntryFromScanner
+    // readEntryFromScanner(scanner)
     // Provided scanner object with beginning of UFO entry as next input.
     // Reads entry data, creates and returns new entry object with data.
     static UFOEntry readEntryFromScanner(Scanner scan) {
@@ -81,7 +82,7 @@ public class Lec01ExerciseComplex {
         return e;
     }
 
-    // readDateTimeFromScanner
+    // readDateTimeFromScanner(scanner)
     // Provided scanner object with date and time as next input.
     // Reads date and time data, creates and returns new DateTime object with data.
     static DateTime readDateTimeFromScanner(Scanner scan) {
@@ -91,7 +92,7 @@ public class Lec01ExerciseComplex {
         return ts;
     }
 
-    // readTimeFromScanner
+    // readTimeFromScanner(scanner)
     // Provided scanner object with time as next input.
     // Reads time data, creates and return new time object with data.
     static Time readTimeFromScanner(Scanner scan) {
@@ -104,7 +105,7 @@ public class Lec01ExerciseComplex {
         return t;
     }
 
-    // readDateFromScanner
+    // readDateFromScanner(scanner)
     // Provided scanner object with date as next input.
     // Reads date data, creates and returns new date object with data.
     static Date readDateFromScanner(Scanner scan) {
@@ -118,7 +119,7 @@ public class Lec01ExerciseComplex {
         return d;
     }
 
-    // readLocationFromScanner
+    // readLocationFromScanner(scanner)
     // Provided scanner object with latitude and longitude as next input.
     // Reads lat and long data, creates and returns new Location object with data.
     static Location readLocationFromScanner(Scanner scan) {
@@ -128,7 +129,7 @@ public class Lec01ExerciseComplex {
         return loc;
     }
 
-    // makeLatLongString
+    // makeLatLongString(location)
     // Given a Location object, creates and returns a formatted String
     // like so: "(lat, long)" with location latitude and longitude
     // expressed as real number rounded to the second decimal point.
@@ -136,7 +137,7 @@ public class Lec01ExerciseComplex {
         return String.format("(%.2f, %.2f)", loc.latitude, loc.longitude);
     }
 
-    // makeDateTimeString
+    // makeDateTimeString(datetime)
     // Given a DateTime object, creates and returns a formatted String
     // like so: "mm/dd/yy hh::mm" with month, day, year, hour, and minute
     // information expressed as integers in appropriate places.
@@ -144,7 +145,7 @@ public class Lec01ExerciseComplex {
         return String.format("%d/%d/%d %d:%02d", dt.date.month, dt.date.day, dt.date.year, dt.time.hours, dt.time.minutes);
     }
 
-    // averageLocation
+    // averageLocation(locations)
     // Given a list of Location objects, returns a new Location object representing the
     // average latitude and longitude in the list.
     private static Location averageLocation(List<Location> locations) {
@@ -163,7 +164,7 @@ public class Lec01ExerciseComplex {
         return avg_location;
     }
 
-    // averageIntegerList
+    // averageIntegerList(values)
     // Given a list of integers, returns its average as a double.
     private static double averageIntegerList(List<Integer> values) {
         int sum = 0;
@@ -173,7 +174,7 @@ public class Lec01ExerciseComplex {
         return ((double) sum) / ((double) values.size());
     }
 
-    // extractLocations
+    // extractLocations(ufo_entries)
     // Given a list of UFOEntry objects, returns a new list of
     // Location objects extracted from the UFO entries.
     private static List<Location> extractLocations(List<UFOEntry> entries) {
@@ -184,7 +185,7 @@ public class Lec01ExerciseComplex {
         return locations;
     }
 
-    // extractDurations
+    // extractDurations(ufo_entries)
     // Given a list of UFOEntry objects, returns a new list of
     // integers representing the durations extracted from the UFO entries.
     private static List<Integer> extractDurations(List<UFOEntry> entries) {
@@ -195,14 +196,14 @@ public class Lec01ExerciseComplex {
         return durations;
     }
 
-    // filterByShape
+    // filterByShape(ufo_entries, shape_filter)
     // Given an array of UFOEntry objects and a shape filter string value,
     // returns a list of UFOEntry objects from the array with a shape that matches the shape filter.
-    private static List<UFOEntry> filterByShape(UFOEntry[] entries, String shape) {
+    private static List<UFOEntry> filterByShape(UFOEntry[] entries, String shape_filter) {
         List<UFOEntry> filtered = new ArrayList<UFOEntry>();
 
         for (UFOEntry e : entries) {
-            if (e.shape.equals(shape)) {
+            if (e.shape.equals(shape_filter)) {
                 filtered.add(e);
             }
         }
@@ -220,13 +221,13 @@ class UFOEntry {
     Location location;
 }
 
-// LatLong
+// Location
 class Location {
     double latitude;
     double longitude;
 }
 
-// TimeStamp
+// DateTime
 class DateTime {
     Date date;
     Time time;
