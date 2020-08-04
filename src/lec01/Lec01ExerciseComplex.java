@@ -28,7 +28,7 @@ public class Lec01ExerciseComplex {
                 longest = entries[i];
             }
 
-            if ((shortest == null) || (entries[i].duration <= longest.duration)) {
+            if ((shortest == null) || (entries[i].duration <= shortest.duration)) {
                 shortest = entries[i];
             }
 
